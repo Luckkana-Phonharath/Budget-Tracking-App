@@ -1,0 +1,68 @@
+{% extends 'baseUser.html' %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+{% block body %}
+<div class="container" style="margin-top: 5rem; margin-bottom: 5rem;">
+    <h2 class="text-center mb-2">Allocate Your Budget</h2>
+
+    <div class="alert alert-info text-center text-dark" style="background-color: #1abc9c;">
+        <strong>Monthly Income:</strong> ${{ monthly_income }}
+    </div>
+    <div class="card mb-4">
+        <div class="card-header" style="background-color: #a3e4d7;">Allocate Budget</div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-center">
+                    <button type="submit" class="btn" style="background-color: #1abc9c;"    >Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" style="background-color: #a3e4d7;">Allocated Budgets</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for budget in budgets %}
+                        <tr>
+                            <td>{{ budget.category.name }}</td>
+                            <td>${{ budget.amount }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'update_budget' budget.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="number" name="amount" value="{{ budget.amount }}" class="form-control mb-2" style="width: 100px;" />
+                                    <button type="submit" class="btn btn-sm btn-success">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'dashboard' %}" class="btn" style="background-color: #1abc9c;">Continue</a>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>
