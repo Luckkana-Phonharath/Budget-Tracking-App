@@ -13,5 +13,4 @@ Description:
 
 Skills: 
 Python (Programming Language) · Django · Django REST Framework · HTML · Cascading Style Sheets (CSS)
-Skills: Python (Programming Language) · Django · Django REST Framework · HTML · Cascading Style Sheets (CSS)
 
